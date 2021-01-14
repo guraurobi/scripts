@@ -1,22 +1,32 @@
 var output = [];
-for (var i=0;i<=999;i++)
+var cardClass = ".discover-entity-card--default-width";
+var cardName = "discover-person-card__name";
+var cardOccupation = "discover-person-card__occupation";
+var cardLink = "discover-entity-type-card__link";
+var cardImage = "discover-entity-type-card__image-circle";
+
+var cards = $$(cardClass);
+
+for (var i=0;i<=cards.length;i++)
 {
 	var person = {};
-	person["name"] = $($(".mn-discovery-person-card")[i]).find(".mn-discovery-person-card__name").text().trim();
 	try {
-		if ($($(".mn-discovery-person-card")[i]).find(".mn-discovery-person-card__occupation").text().indexOf(" at ")>0)
+		person["name"] = cards[i].getElementsByClassName(cardName)[0].innerText.trim();
+		//english version
+		if (cards[i].getElementsByClassName(cardOccupation)[0].innerText.indexOf(" at ")>0)
 		{
-			person["job"] = $($(".mn-discovery-person-card")[i]).find(".mn-discovery-person-card__occupation").text().trim().split(" at ")[0];
-			person["company"] = $($(".mn-discovery-person-card")[i]).find(".mn-discovery-person-card__occupation").text().trim().split(" at ")[1];
+			person["job"] = cards[i].getElementsByClassName(cardOccupation)[0].innerText.trim().split(" at ")[0];
+			person["company"] = cards[i].getElementsByClassName(cardOccupation)[0].innerText.trim().split(" at ")[1];
 		}
-		if ($($(".mn-discovery-person-card")[i]).find(".mn-discovery-person-card__occupation").text().indexOf(" la ")>0)
+		//romanian version
+		if (cards[i].getElementsByClassName(cardOccupation)[0].innerText.indexOf(" la ")>0)
 		{
-			person["job"] = $($(".mn-discovery-person-card")[i]).find(".mn-discovery-person-card__occupation").text().trim().split(" la ")[0];
-			person["company"] = $($(".mn-discovery-person-card")[i]).find(".mn-discovery-person-card__occupation").text().trim().split(" la ")[1];
+			person["job"] = cards[i].getElementsByClassName(cardOccupation)[0].innerText.trim().split(" la ")[0];
+			person["company"] = cards[i].getElementsByClassName(cardOccupation)[0].innerText.trim().split(" la ")[1];
 		}
-		person["url"] = $($(".mn-discovery-person-card")[i]).find(".mn-discovery-person-card__link")[0].href;
-		person["img"] =  $($(".mn-discovery-person-card")[i]).find(".lazy-image")[0].src;
+		person["url"] = cards[i].getElementsByClassName(cardLink)[0].href;
+		person["img"] = cards[i].getElementsByClassName(cardImage)[0].src;
 	} catch (e) {}
-    output.push(person);
+	if (person.name) output.push(person);
 }
 console.log(JSON.stringify(output));
